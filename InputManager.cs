@@ -11,7 +11,7 @@ namespace Calc
     /// </summary>
     public static class InputManager
     {
-        /// <summary>
+        /*/// <summary>
         /// Dictionary of characters representing primary operations.
         /// </summary>
         /// <typeparam name="char">the representing character</typeparam>
@@ -33,7 +33,7 @@ namespace Calc
         {
             ['+'] = new Add(),
             ['-'] = new Subtract(),
-        };
+        };*/
 
         /// <summary>
         /// Parses user input or throws an exceptions if input is invalid.
@@ -45,14 +45,13 @@ namespace Calc
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
             var expression = new List<ExpressionBlock>();
-            Operation currentOperation;
 
             string trimmedInput = Regex.Replace(input, @"\s+", "") + '#';
             string currentBlockData = "";
 
             for (int i = 0; trimmedInput[i] != '#'; i++)
             {
-                if (primaryKeyChars.ContainsKey(trimmedInput[i]) || secondaryKeyChars.ContainsKey(trimmedInput[i]))
+                if (Tiers.TryFindKeyTier(trimmedInput[i], out int tier))
                 {
                     if (currentBlockData.Length != 0)
                     {
@@ -64,7 +63,8 @@ namespace Calc
                         throw new FormatException("Invalid expression format.");
                     }
                     
-                    if (primaryKeyChars.TryGetValue(trimmedInput[i], out currentOperation))
+                    expression.Add(new ExpressionBlock(Tiers.GetOperation(trimmedInput[i], tier), tier));
+                    /*if (primaryKeyChars.TryGetValue(trimmedInput[i], out currentOperation))
                     {
                         expression.Add(new ExpressionBlock(currentOperation, true));
                     }
@@ -72,7 +72,7 @@ namespace Calc
                     {
                         secondaryKeyChars.TryGetValue(trimmedInput[i], out currentOperation);
                         expression.Add(new ExpressionBlock(currentOperation, false));
-                    }
+                    }*/
                 }
                 else if (char.IsDigit(trimmedInput[i]) || trimmedInput[i] == '.')
                 {
@@ -95,9 +95,10 @@ namespace Calc
                 return expression[0].value;
             }
 
-            ProcessExpression(expression, true);
-
-            ProcessExpression(expression, false);
+            for (int i = Tiers.Count - 1; i >= 0; i--)
+            {
+                ProcessExpression(expression, i);
+            }
 
             return expression[0].value;
         }
@@ -106,13 +107,11 @@ namespace Calc
         /// Process one continuous string of equally-prioritized operations
         /// </summary>
         /// <param name="expression">expression to process</param>
-        /// <param name="processPrimary">determines if primary operations are processed with this step</param>
-        /// <returns>processed and shortened string</returns>
-        private static List<ExpressionBlock> ProcessExpression(List<ExpressionBlock> expression, bool processPrimary)
+        private static List<ExpressionBlock> ProcessExpression(List<ExpressionBlock> expression, int tier)
         {
             for (int i = 0; i < expression.Count; i++)
             {
-                if (!expression[i].isNumber && ((processPrimary && expression[i].isPrimary) || (!processPrimary && !expression[i].isPrimary)))
+                if (!expression[i].isNumber && (tier == expression[i].tier))
                 {
                     ((BinaryOperation)expression[i].operation).Init(expression[i - 1].value, expression[i + 1].value);
                     expression[i - 1] = new ExpressionBlock(expression[i].operation.Execute());

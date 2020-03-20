@@ -12,11 +12,7 @@ namespace Calc
         /// </summary>
         /// <value></value>
         public bool isNumber { get; }
-        /// <summary>
-        /// Does this block represent a primary operation?
-        /// </summary>
-        /// <value></value>
-        public bool isPrimary { get; }
+        public int tier { get; }
         /// <summary>
         /// Operation this block represents.
         /// </summary>
@@ -34,20 +30,15 @@ namespace Calc
         /// <param name="inputNumber">number to put into a block</param>
         public ExpressionBlock(double inputNumber)
         {
-            value = inputNumber;
-            isNumber = true;
+            this.value = inputNumber;
+            this.isNumber = true;
         }
 
-        /// <summary>
-        /// Constructor for block containing an operation.
-        /// </summary>
-        /// <param name="inputOperation">a type of operation to put into a block</param>
-        /// <param name="primary">whether this operation is primary or not</param>
-        public ExpressionBlock(Operation inputOperation, bool primary)
+        public ExpressionBlock(Operation operation, int operationTier)
         {
-            operation = inputOperation;
-            isNumber = false;
-            isPrimary = primary;
+            this.operation = operation;
+            this.isNumber = false;
+            this.tier = operationTier;
         }
     }
 }
