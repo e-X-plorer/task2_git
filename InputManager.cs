@@ -11,30 +11,6 @@ namespace Calc
     /// </summary>
     public static class InputManager
     {
-        /*/// <summary>
-        /// Dictionary of characters representing primary operations.
-        /// </summary>
-        /// <typeparam name="char">the representing character</typeparam>
-        /// <typeparam name="Operation">the operation each character represents</typeparam>
-        /// <returns></returns>
-        private static Dictionary<char, Operation> primaryKeyChars = new Dictionary<char, Operation>()
-        {
-            ['*'] = new Multiply(),
-            ['/'] = new Divide(),
-        };
-
-        /// <summary>
-        /// Dictionary of characters representing secondary operations.
-        /// </summary>
-        /// <typeparam name="char">the representing character</typeparam>
-        /// <typeparam name="Operation">the operation each character represents</typeparam>
-        /// <returns></returns>
-        private static Dictionary<char, Operation> secondaryKeyChars = new Dictionary<char, Operation>()
-        {
-            ['+'] = new Add(),
-            ['-'] = new Subtract(),
-        };*/
-
         /// <summary>
         /// Parses user input or throws an exceptions if input is invalid.
         /// </summary>

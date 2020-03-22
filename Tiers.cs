@@ -10,15 +10,16 @@ namespace Calc
             new Dictionary<char, Operation>()
             {
                 ['+'] = new Add(),
-                ['-'] = new Subtract(),
+                ['-'] = new Subtract()
             },
             new Dictionary<char, Operation>
             {
                 ['*'] = new Multiply(),
-                ['/'] = new Divide(),                
+                ['/'] = new Divide()                
             },
             new Dictionary<char, Operation>()
             {
+                ['^'] = new Power()
             }
         };
 

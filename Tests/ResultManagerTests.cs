@@ -9,6 +9,7 @@ namespace Calc
         [InlineData("5+5-5", 5)]
         [InlineData("5 * 5 /     5", 5)]
         [InlineData("    5 / 5 * 5    ", 5)]
+        [InlineData("3+ 3 *      3^3 + 3    ^3*3^ 3", 813)]
         [InlineData("123.45 + 123.45 * 123.45 / 123.45 - 123.45", 123.45)]
         [InlineData(".1 + 1. + .1", 1.2)]
         [InlineData("123.456", 123.456)]
