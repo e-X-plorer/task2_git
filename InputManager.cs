@@ -40,15 +40,6 @@ namespace Calc
                     }
                     
                     expression.Add(new ExpressionBlock(Tiers.GetOperation(trimmedInput[i], tier), tier));
-                    /*if (primaryKeyChars.TryGetValue(trimmedInput[i], out currentOperation))
-                    {
-                        expression.Add(new ExpressionBlock(currentOperation, true));
-                    }
-                    else
-                    {
-                        secondaryKeyChars.TryGetValue(trimmedInput[i], out currentOperation);
-                        expression.Add(new ExpressionBlock(currentOperation, false));
-                    }*/
                 }
                 else if (char.IsDigit(trimmedInput[i]) || trimmedInput[i] == '.')
                 {
@@ -83,6 +74,7 @@ namespace Calc
         /// Process one continuous string of equally-prioritized operations
         /// </summary>
         /// <param name="expression">expression to process</param>
+        /// <param name="tier">tier to process</param>
         private static List<ExpressionBlock> ProcessExpression(List<ExpressionBlock> expression, int tier)
         {
             for (int i = 0; i < expression.Count; i++)
