@@ -37,6 +37,26 @@ namespace Calc
         public static int Count => tiers.Count;
 
         /// <summary>
+        /// Check if key characters don't repeat.
+        /// </summary>
+        /// <returns>true if characters don't repeat, false otherwise</returns>
+        public static bool CheckValidity()
+        {
+            var set = new HashSet<char>();
+            foreach (var tier in tiers)
+            {
+                foreach (var entry in tier)
+                {
+                    if (!set.Add(entry.Key))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
         /// Get Operation object assigned to certain key character.
         /// </summary>
         /// <param name="key">key to find</param>
