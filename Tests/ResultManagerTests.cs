@@ -23,7 +23,7 @@ namespace Calc
         [InlineData("*123+123", "Invalid expression format.")]
         [InlineData("123/123/", "Invalid expression format.")]
         [InlineData("123 ++ 123", "Invalid expression format.")]
-        [InlineData("12 $ 23 + 1", "Invalid expression format.")]
+        [InlineData("12 $ 23 + 1", "Unknown character found in expression.")]
         [InlineData("123 + 123 / 0 + 123", "Cannot divide by zero.")]
         public void ShowResult_TestInvalidInput(string input, string expected)
         {

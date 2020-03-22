@@ -18,9 +18,13 @@ namespace Calc
             {
                 return InputManager.ProcessInput(stringToProcess).ToString();
             }
-            catch (FormatException)
+            catch (CalculatorExceptions.ParsingException e)
             {
-                return "Invalid expression format.";
+                return e.Message;
+            }
+            catch (CalculatorExceptions.InvalidExpressionException e)
+            {
+                return e.Message;
             }
             catch (DivideByZeroException)
             {
