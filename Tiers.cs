@@ -26,7 +26,8 @@ namespace Calc
             },
             new Dictionary<char, Operation>()
             {
-                ['^'] = new Power()
+                ['^'] = new Power(),
+                ['%'] = new Modulo()
             }
         };
 
