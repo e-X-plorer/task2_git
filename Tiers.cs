@@ -26,7 +26,8 @@ namespace Calc
             },
             new Dictionary<char, Operation>()
             {
-                ['^'] = new Power()
+                ['^'] = new Power(),
+                ['%'] = new Modulo()
             }
         };
 
@@ -35,6 +36,26 @@ namespace Calc
         /// How many tiers the calculator currently supports.
         /// </summary>
         public static int Count => tiers.Count;
+
+        /// <summary>
+        /// Check if key characters don't repeat.
+        /// </summary>
+        /// <returns>true if characters don't repeat, false otherwise</returns>
+        public static bool CheckValidity()
+        {
+            var set = new HashSet<char>();
+            foreach (var tier in tiers)
+            {
+                foreach (var entry in tier)
+                {
+                    if (!set.Add(entry.Key))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
 
         /// <summary>
         /// Get Operation object assigned to certain key character.

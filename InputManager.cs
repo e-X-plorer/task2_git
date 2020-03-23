@@ -15,7 +15,7 @@ namespace Calc
         /// Parses user input or throws an exceptions if input is invalid.
         /// </summary>
         /// <param name="input">string to parse</param>
-        /// <returns>result of calculations</returns>
+        /// <returns>parsingResult of calculations</returns>
         public static double ProcessInput(string input)
         {
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
@@ -25,18 +25,24 @@ namespace Calc
             string trimmedInput = Regex.Replace(input, @"\s+", "") + '#';
             string currentBlockData = "";
 
+            double parsingResult;
+
             for (int i = 0; trimmedInput[i] != '#'; i++)
             {
                 if (Tiers.TryFindKeyTier(trimmedInput[i], out int tier))
                 {
                     if (currentBlockData.Length != 0)
                     {
-                        expression.Add(new ExpressionBlock(double.Parse(currentBlockData)));
+                        if (!double.TryParse(currentBlockData, out parsingResult))
+                        {
+                            throw new CalculatorExceptions.ParsingException("Invalid number format spotted.");
+                        }
+                        expression.Add(new ExpressionBlock(parsingResult));
                         currentBlockData = "";
                     }
                     else
                     {
-                        throw new FormatException("Invalid expression format.");
+                        throw new CalculatorExceptions.InvalidExpressionException("Invalid expression format.");
                     }
                     
                     expression.Add(new ExpressionBlock(Tiers.GetOperation(trimmedInput[i], tier), tier));
@@ -47,15 +53,23 @@ namespace Calc
                 }
                 else
                 {
-                    throw new FormatException("Invalid expression format.");
+                    throw new CalculatorExceptions.InvalidExpressionException("Unknown character found in expression.");
                 }
             }
 
-            expression.Add(new ExpressionBlock(double.Parse(currentBlockData)));
+            if (currentBlockData.Length == 0)
+            {
+                throw new CalculatorExceptions.InvalidExpressionException("Invalid expression format.");
+            }
+            if (!double.TryParse(currentBlockData, out parsingResult))
+            {
+                throw new CalculatorExceptions.ParsingException("Invalid number format spotted.");
+            }
+            expression.Add(new ExpressionBlock(parsingResult));
 
             if (expression.Count == 0 || !expression[expression.Count - 1].isNumber)
             {
-                throw new FormatException("Invalid expression format.");
+                throw new CalculatorExceptions.InvalidExpressionException("Invalid expression format.");
             }
             else if (expression.Count == 1)
             {
