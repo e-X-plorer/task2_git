@@ -13,6 +13,7 @@ namespace Calc
         [InlineData("5 % 2", 1)]
         [InlineData("5 ^ 3 + 6.5 % 2.1", 125.2)]
         [InlineData("123.45 + 123.45 * 123.45 / 123.45 - 123.45", 123.45)]
+        [InlineData("pi + 100 * e - e", 272.251494)]
         public void ProcessInput_TestsLegitInput(string input, double expected)
         {
             Assert.True(expected - InputManager.ProcessInput(input) < ConstValues.ZERO_EPSILON);

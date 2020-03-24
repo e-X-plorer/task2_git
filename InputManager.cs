@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Text;
+using CalculatorSpecialCharacters;
 
 namespace Calc
 {
@@ -23,7 +24,7 @@ namespace Calc
 
             var expression = new List<ExpressionBlock>();
 
-            string trimmedInput = Regex.Replace(input, @"\s+", "") + '#';
+            string trimmedInput = Constants.SubstituteConstants(Regex.Replace(input, @"\s+", "") + '#');
             StringBuilder currentBlockData = new StringBuilder();
 
             double parsingResult;
