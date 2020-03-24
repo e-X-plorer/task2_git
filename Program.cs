@@ -12,14 +12,8 @@ namespace Calc
         /// </summary>
         static void Main()
         {
-            if (Tiers.CheckValidity())
-            {
-                Console.WriteLine(ResultManager.ShowResult(Console.ReadLine()));
-            }
-            else
-            {
-                Console.WriteLine("Invalid operations preset.");
-            }
+            string input = CalculatorSpecialCharacters.Constants.SubstituteConstants(Console.ReadLine());
+            Console.WriteLine(ResultManager.ShowResult(input));
         }
     }
 }

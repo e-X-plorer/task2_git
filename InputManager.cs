@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
+using System.Text;
 
 namespace Calc
 {
@@ -23,7 +24,7 @@ namespace Calc
             var expression = new List<ExpressionBlock>();
 
             string trimmedInput = Regex.Replace(input, @"\s+", "") + '#';
-            string currentBlockData = "";
+            StringBuilder currentBlockData = new StringBuilder();
 
             double parsingResult;
 
@@ -33,12 +34,12 @@ namespace Calc
                 {
                     if (currentBlockData.Length != 0)
                     {
-                        if (!double.TryParse(currentBlockData, out parsingResult))
+                        if (!double.TryParse(currentBlockData.ToString(), out parsingResult))
                         {
                             throw new CalculatorExceptions.ParsingException("Invalid number format spotted.");
                         }
                         expression.Add(new ExpressionBlock(parsingResult));
-                        currentBlockData = "";
+                        currentBlockData.Clear();
                     }
                     else
                     {
@@ -49,7 +50,7 @@ namespace Calc
                 }
                 else if (char.IsDigit(trimmedInput[i]) || trimmedInput[i] == '.')
                 {
-                    currentBlockData += trimmedInput[i];
+                    currentBlockData.Append(trimmedInput[i]);
                 }
                 else
                 {
@@ -61,7 +62,7 @@ namespace Calc
             {
                 throw new CalculatorExceptions.InvalidExpressionException("Invalid expression format.");
             }
-            if (!double.TryParse(currentBlockData, out parsingResult))
+            if (!double.TryParse(currentBlockData.ToString(), out parsingResult))
             {
                 throw new CalculatorExceptions.ParsingException("Invalid number format spotted.");
             }
