@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text.Json;
-using System.IO;
 
 namespace Calc
 {
@@ -12,14 +9,9 @@ namespace Calc
         /// </summary>
         static void Main()
         {
-            if (Tiers.CheckValidity())
-            {
-                Console.WriteLine(ResultManager.ShowResult(Console.ReadLine()));
-            }
-            else
-            {
-                Console.WriteLine("Invalid operations preset.");
-            }
+            Console.WriteLine("Enter your expression below. Please leave spaces between special constants if you are using them.");
+            string input = Console.ReadLine();
+            Console.WriteLine(ResultManager.ShowResult(input));
         }
     }
 }
