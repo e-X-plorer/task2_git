@@ -1,0 +1,6 @@
+[submodule "CalculatorExceptions"]
+	path = CalculatorExceptions
+	url = https://github.com/e-X-plorer/CalculatorExceptions.git
+[submodule "CalculatorSpecialCharacters"]
+	path = CalculatorSpecialCharacters
+	url = https://github.com/e-X-plorer/CalculatorSpecialCharacters.git
